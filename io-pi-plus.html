@@ -2,8 +2,13 @@
     RED.nodes.registerType('mcp23017-write-node',{
         category: 'MCP23017',
         color: '#a6bbcf',
+        paletteLabel: 'mcp23017 out',
         defaults: {
-            name: {value:""}
+            name: {value:""},
+            bus: {value:"1"},
+            address: {value:"0x20"},
+            direction: {value:"0"},
+            init: {value:"0xFF"}
         },
         inputs:1,
         outputs:1,
@@ -19,8 +24,37 @@
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
+    <div class="form-row">
+        <label for="node-input-bus"><i class="icon-tag"></i> I2C-Bus</label>
+        <input type="text" id="node-input-bus" placeholder="Bus">
+    </div>
+    <div class="form-row">
+        <label for="node-input-address"><i class="icon-tag"></i> Address</label>
+        <input type="text" id="node-input-address" placeholder="Address">
+    </div>
+    <div class="form-row">
+        <label for="node-input-address"><i class="icon-tag"></i> Direction</label>
+        <input type="text" id="node-input-direction" placeholder="Direction">
+    </div>
+    <div class="form-row">
+        <label for="node-input-address"><i class="icon-tag"></i> Init value</label>
+        <input type="text" id="node-input-init" placeholder="Init">
+    </div>
+    <div class="form-tips"><b>Tip:</b> This is here to help.</div>
 </script>
 
 <script type="text/x-red" data-help-name="mcp23017-write-node">
+    <p>A simple node that converts the message payloads into all lower-case characters</p>
+    <p>Some useful help text to introduce the node.</p>
+   <h3>Outputs</h3>
+       <dl class="message-properties">
+       <dt>payload
+           <span class="property-type">string | buffer</span>
+       </dt>
+   <h3>Details</h3>
+   <p>Some more information about the node.</p>
+</script>
+
+<script type="text/x-red" data-description-name="mcp23017-write-node">
     <p>A simple node that converts the message payloads into all lower-case characters</p>
 </script>
