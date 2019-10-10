@@ -1,8 +1,10 @@
 const mcp23017 = require('mcp23017');
 
+
 module.exports = function(RED) {
 
-	function MCP23017ConfigNode(n) {
+
+	function MCP23017ConfigNode(config) {
         RED.nodes.createNode(this, config);
 
         this.bus = config.bus;
@@ -10,10 +12,10 @@ module.exports = function(RED) {
 
         this.mcp23017 = new mcp23017.IOPi(bus, address);
     }
-
     RED.nodes.registerType("mcp23017-config", MCP23017ConfigNode);
 
-    function MCP23017PortConfigNode(n) {
+
+    function MCP23017PortConfigNode(config) {
         RED.nodes.createNode(this, config);
 
         this.configNode = RED.nodes.getNode(config.mcp23017Config);
@@ -26,6 +28,7 @@ module.exports = function(RED) {
 
     }
     RED.nodes.registerType("mcp23017-port-config", MCP23017PortConfigNode);
+
 
 	function MCP23017WriteNode(config) {
 		RED.nodes.createNode(this, config);
