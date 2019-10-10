@@ -1,23 +1,98 @@
+
+
+
 <script type="text/javascript">
+    
+    RED.nodes.registerType('mcp23017-config',{
+        category: 'config',
+        defaults: {
+            name: {value:""},
+            bus: {value: 1, required: true, validate: function(v) {
+                return v == 0 || v == 1;
+            }},
+            address: {value: "0x20", required: true, validate: function(v) {
+                return !isNaN(Number(v).valueOf());
+            }},
+        },
+        label: function() {
+            return this.host+":"+this.port;
+        }
+    });
+
+    RED.nodes.registerType('mcp23017-port-config',{
+        category: 'config',
+        defaults: {
+            name: {value:""},
+            chip: {value:"", type: "mcp23017-config"},
+            port: {value:0, required: true},
+            direction: {value:0, required: true, validate: function(v) {
+                return v == 0 || v == 1;
+            }},
+            init: {value:"0xFF", required: true, validate: function(v) {
+                const a = Number(v).valueOf();
+                return !isNaN(a) && a >= 0 && a < 256;
+            }}
+        },
+        label: function() {
+            return this.host+":"+this.port;
+        }
+    });
+
     RED.nodes.registerType('mcp23017-write-node',{
         category: 'MCP23017',
         color: '#a6bbcf',
         paletteLabel: 'mcp23017 out',
         defaults: {
             name: {value:""},
-            bus: {value:"1"},
-            address: {value:"0x20"},
-            direction: {value:"0"},
-            init: {value:"0xFF"}
+            port: {value:"", type: "mcp23017-port-config"},            
         },
         inputs:1,
         outputs:1,
         icon: "file.png",
         label: function() {
-            return this.name||"mcp23017-write-node";
+            return this.name || "mcp23017-write-node";
         }
     });
 </script>
+
+<script type="text/x-red" data-template-name="mcp23017-config">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-bus"><i class="icon-bookmark"></i> I2C Bus</label>
+        <input type="text" id="node-config-input-bus">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-address"><i class="icon-bookmark"></i> I2C Address</label>
+        <input type="text" id="node-config-input-address">
+    </div>
+</script>
+
+<script type="text/x-red" data-template-name="mcp23017-port-config">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-chip"><i class="icon-bookmark"></i> Chip</label>
+        <input type="text" id="node-config-input-chip">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-port"><i class="icon-bookmark"></i> Port</label>
+        <input type="text" id="node-config-input-port">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-direction"><i class="icon-bookmark"></i> Direction</label>
+        <input type="text" id="node-config-input-direction">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-init"><i class="icon-bookmark"></i> Init</label>
+        <input type="text" id="node-config-input-init">
+    </div>
+</script>
+
 
 <script type="text/x-red" data-template-name="mcp23017-write-node">
     <div class="form-row">
@@ -25,22 +100,39 @@
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-bus"><i class="icon-tag"></i> I2C-Bus</label>
-        <input type="text" id="node-input-bus" placeholder="Bus">
+        <label for="node-input-port"><i class="icon-tag"></i> MCP20317 port</label>
+        <input type="text" id="node-input-port" placeholder="Port">
     </div>
-    <div class="form-row">
+    <!-- <div class="form-row">
         <label for="node-input-address"><i class="icon-tag"></i> Address</label>
         <input type="text" id="node-input-address" placeholder="Address">
+    </div>
+    <div class="form-row">
+        <label for="node-input-port"><i class="icon-tag"></i> Port</label>
+        <input type="text" id="node-input-address" placeholder="Port">
     </div>
     <div class="form-row">
         <label for="node-input-address"><i class="icon-tag"></i> Direction</label>
         <input type="text" id="node-input-direction" placeholder="Direction">
     </div>
     <div class="form-row">
-        <label for="node-input-address"><i class="icon-tag"></i> Init value</label>
+        <label for="node-input-address" title="Init value (byte)"><i class="icon-tag"></i> Init value</label>
         <input type="text" id="node-input-init" placeholder="Init">
-    </div>
+    </div> -->
     <div class="form-tips"><b>Tip:</b> This is here to help.</div>
+</script>
+
+
+<script type="text/x-red" data-help-name="mcp23017-config">
+    <p>A simple node that converts the message payloads into all lower-case characters</p>
+    <p>Some useful help text to introduce the node.</p>
+   <h3>Outputs</h3>
+       <dl class="message-properties">
+       <dt>payload
+           <span class="property-type">string | buffer</span>
+       </dt>
+   <h3>Details</h3>
+   <p>Some more information about the node.</p>
 </script>
 
 <script type="text/x-red" data-help-name="mcp23017-write-node">
@@ -55,6 +147,3 @@
    <p>Some more information about the node.</p>
 </script>
 
-<script type="text/x-red" data-description-name="mcp23017-write-node">
-    <p>A simple node that converts the message payloads into all lower-case characters</p>
-</script>
