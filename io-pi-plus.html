@@ -53,6 +53,38 @@
             return this.name || "mcp23017-write-node";
         }
     });
+
+    RED.nodes.registerType('mcp23017-write-port',{
+        category: 'MCP23017',
+        color: '#a6bbcf',
+        paletteLabel: 'mcp23017 port out',
+        defaults: {
+            name: {value:""},
+            port: {value:"", type: "mcp23017-port-config"},            
+        },
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        label: function() {
+            return this.name || "mcp23017-write-port";
+        }
+    });
+
+    RED.nodes.registerType('mcp23017-write-pin',{
+        category: 'MCP23017',
+        color: '#a6bbcf',
+        paletteLabel: 'mcp23017 pin out',
+        defaults: {
+            name: {value:""},
+            port: {value:"", type: "mcp23017-port-config"},            
+        },
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        label: function() {
+            return this.name || "mcp23017-write-pin";
+        }
+    });
 </script>
 
 <script type="text/x-red" data-template-name="mcp23017-config">
@@ -103,22 +135,30 @@
         <label for="node-input-port"><i class="icon-tag"></i> MCP20317 port</label>
         <input type="text" id="node-input-port" placeholder="Port">
     </div>
-    <!-- <div class="form-row">
-        <label for="node-input-address"><i class="icon-tag"></i> Address</label>
-        <input type="text" id="node-input-address" placeholder="Address">
+    <div class="form-tips"><b>Tip:</b> This is here to help.</div>
+</script>
+
+<script type="text/x-red" data-template-name="mcp23017-write-port">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-port"><i class="icon-tag"></i> Port</label>
-        <input type="text" id="node-input-address" placeholder="Port">
+        <label for="node-input-port"><i class="icon-tag"></i> MCP20317 port</label>
+        <input type="text" id="node-input-port" placeholder="Port">
+    </div>
+    <div class="form-tips"><b>Tip:</b> This is here to help.</div>
+</script>
+
+<script type="text/x-red" data-template-name="mcp23017-write-pin">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-address"><i class="icon-tag"></i> Direction</label>
-        <input type="text" id="node-input-direction" placeholder="Direction">
+        <label for="node-input-port"><i class="icon-tag"></i> MCP20317 port</label>
+        <input type="text" id="node-input-port" placeholder="Port">
     </div>
-    <div class="form-row">
-        <label for="node-input-address" title="Init value (byte)"><i class="icon-tag"></i> Init value</label>
-        <input type="text" id="node-input-init" placeholder="Init">
-    </div> -->
     <div class="form-tips"><b>Tip:</b> This is here to help.</div>
 </script>
 
